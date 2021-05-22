@@ -33,32 +33,24 @@ namespace cpu_sequential {
   }
 
   template <typename T>
-  void quick_sort_impl(std::vector<T>& data) {
+  void quick_sort_impl(std::vector<T>& data, size_t begin, size_t end) {
     static std::mt19937 gen(42);
-
-    // Use queue to get rid of recursion
-    std::queue<std::tuple<size_t, size_t>> q;
-    q.push({0, data.size()});
-    while (!q.empty()) {
-      auto [begin, end] = q.front();
-      q.pop();
-      if (end - begin <= 1) {
-        continue;
-      }
-      std::uniform_int_distribution<size_t> dist(begin, end - 1);
-      T pivot = data[dist(gen)];
-      size_t right_begin = partition_impl(data, begin, end, pivot, true);
-      size_t left_end = partition_impl(data, begin, right_begin, pivot, false);
-      q.push({begin, left_end});
-      q.push({right_begin, end});
+    if (end - begin <= 1) {
+      return;
     }
+    std::uniform_int_distribution<size_t> dist(begin, end - 1);
+    T pivot = data[dist(gen)];
+    size_t right_begin = partition_impl(data, begin, end, pivot, true);
+    size_t left_end = partition_impl(data, begin, right_begin, pivot, false);
+    quick_sort_impl(data, begin, left_end);
+    quick_sort_impl(data, right_begin, end);
   }
 
   }  // void namespace
 
   template <typename T>
   void quick_sort(std::vector<T>& data) {
-    quick_sort_impl(data);
+    quick_sort_impl(data, 0, data.size());
   }
 
 }
