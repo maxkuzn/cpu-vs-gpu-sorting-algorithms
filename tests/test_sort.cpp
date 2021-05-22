@@ -4,6 +4,9 @@
 #include <cpu_sequential/quick_sort.h>
 #include <cpu_sequential/std_sort.h>
 
+#include <cpu_parallel/merge_sort.h>
+#include <cpu_parallel/quick_sort.h>
+
 #include <algorithm>
 #include <gtest/gtest-typed-test.h>
 #include <limits>
@@ -101,5 +104,8 @@ std::vector<
   {cpu_sequential::merge_sort<T>, "sequential merge sort"},
   {cpu_sequential::quick_sort<T>, "sequential quick sort"},
   {cpu_sequential::std_sort_wrapper<T>, "std sort wrapper"},
+
+  {cpu_parallel::merge_sort<T>, "parallel merge sort"},
+  {cpu_parallel::quick_sort<T>, "parallel merge sort"},
 };
 

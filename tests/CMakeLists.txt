@@ -16,7 +16,8 @@ enable_testing()
 
 macro(package_add_test TEST_NAME)
     add_executable(${TEST_NAME} ${ARGN})
-    target_link_libraries(${TEST_NAME} gtest gtest_main cpu_sequential)
+    target_link_libraries(${TEST_NAME} gtest gtest_main
+                          cpu_sequential cpu_parallel)
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
     set_target_properties(${TEST_NAME} PROPERTIES FOLDER tests)
 endmacro()
@@ -30,7 +31,8 @@ foreach(TEST_SRC_FILE ${TEST_SRC_FILES})
 endforeach()
 
 add_executable(all_tests ${TEST_SRC_FILES})
-target_link_libraries(all_tests gtest gtest_main cpu_sequential)
+target_link_libraries(all_tests gtest gtest_main
+                      cpu_sequential cpu_parallel)
 add_test(NAME all_tests COMMAND all_tests)
 set_target_properties(all_tests PROPERTIES FOLDER tests)
 
