@@ -22,6 +22,11 @@ namespace {
     while (right_idx != end) {
       buffer[out_idx] = data[right_idx++];
     }
+
+    // Copy data back
+    for (size_t i = begin; i != end; ++i) {
+      data[i] = buffer[i];
+    }
   }
 
   template <typename T>
@@ -32,8 +37,8 @@ namespace {
     }
 
     size_t middle = begin + (end - begin) / 2;
-    merge_sort_inplace_impl(data, buffer, begin, middle);
-    merge_sort_inplace_impl(data, buffer, middle, end);
+    merge_sort_impl(data, buffer, begin, middle);
+    merge_sort_impl(data, buffer, middle, end);
     merge_impl(data, buffer, begin, middle, end);
   }
 }
@@ -42,6 +47,6 @@ namespace {
 template <typename T>
 void merge_sort(std::vector<T>& data) {
   std::vector<T> buffer(data.size());
-  merge_sort_inplace_impl(data, buffer, 0, data.size());
+  merge_sort_impl(data, buffer, 0, data.size());
 }
 
