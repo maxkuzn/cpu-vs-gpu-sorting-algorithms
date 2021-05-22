@@ -44,10 +44,12 @@ namespace {
   }
 }
 
+namespace cpu_sequential {
 
-template <typename T>
-void merge_sort(std::vector<T>& data) {
-  std::vector<T> buffer(data.size());
-  merge_sort_impl(data, buffer, 0, data.size());
+  template <typename T>
+  void merge_sort(std::vector<T>& data) {
+    std::vector<T> buffer(data.size());
+    merge_sort_impl(data, buffer, 0, data.size());
+  }
+
 }
-
