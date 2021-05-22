@@ -3,7 +3,10 @@
 #include <vector>
 
 
-namespace {
+
+namespace cpu_sequential {
+  namespace {
+
   template <typename T>
   void merge_impl(std::vector<T>& data, std::vector<T>& buffer,
                   size_t begin, size_t middle, size_t end) {
@@ -42,9 +45,8 @@ namespace {
     merge_sort_impl(data, buffer, middle, end);
     merge_impl(data, buffer, begin, middle, end);
   }
-}
 
-namespace cpu_sequential {
+  }  // void namespace
 
   template <typename T>
   void merge_sort(std::vector<T>& data) {

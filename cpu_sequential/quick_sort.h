@@ -6,7 +6,9 @@
 #include <tuple>
 
 
-namespace {
+namespace cpu_sequential {
+
+  namespace {
   template <typename T>
   size_t partition_impl(std::vector<T>& data, size_t begin, size_t end,
                       T pivot, bool pivot_to_left) {
@@ -51,9 +53,8 @@ namespace {
       q.push({right_begin, end});
     }
   }
-}
 
-namespace cpu_sequential {
+  }  // void namespace
 
   template <typename T>
   void quick_sort(std::vector<T>& data) {
