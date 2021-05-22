@@ -1,9 +1,14 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
+#include <omp.h>
 
 
-namespace {
+
+namespace cpu_parallel {
+  namespace {
+
   template <typename T>
   void merge_impl(std::vector<T>& data, std::vector<T>& buffer,
                   size_t begin, size_t middle, size_t end) {
@@ -32,24 +37,38 @@ namespace {
 
   template <typename T>
   void merge_sort_impl(std::vector<T>& data, std::vector<T>& buffer,
-                       size_t begin, size_t end) {
+                       size_t begin, size_t end, size_t limit) {
     if (end - begin <= 1) {
       return;
     }
 
     size_t middle = begin + (end - begin) / 2;
-    merge_sort_impl(data, buffer, begin, middle);
-    merge_sort_impl(data, buffer, middle, end);
+    if (end - begin > limit) {
+      #pragma omp taskgroup
+      {
+        #pragma omp task shared(data, buffer) untied
+        merge_sort_impl(data, buffer, begin, middle, limit);
+        #pragma omp task shared(data, buffer) untied
+        merge_sort_impl(data, buffer, middle, end, limit);
+        #pragma omp taskyield
+      }
+    } else {
+      merge_sort_impl(data, buffer, begin, middle, limit);
+      merge_sort_impl(data, buffer, middle, end, limit);
+    }
     merge_impl(data, buffer, begin, middle, end);
   }
-}
 
-namespace cpu_parallel {
+  }  // void namespace
 
   template <typename T>
   void merge_sort(std::vector<T>& data) {
     std::vector<T> buffer(data.size());
-    merge_sort_impl(data, buffer, 0, data.size());
+    constexpr size_t real_tasks_per_thread = 1000;
+    size_t limit = data.size() / (8 * real_tasks_per_thread) / omp_get_max_threads();
+    #pragma omp parallel
+    #pragma omp single nowait
+    merge_sort_impl(data, buffer, 0, data.size(), limit);
   }
 
 }
