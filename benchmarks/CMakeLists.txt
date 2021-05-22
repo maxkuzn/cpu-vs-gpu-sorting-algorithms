@@ -14,6 +14,7 @@ foreach(BENCH_SOURCE ${BENCH_SOURCES})
     set(BENCH_TARGET "${BENCH_NAME}")
 
     add_executable(${BENCH_TARGET} ${BENCH_SOURCE})
-    target_link_libraries(${BENCH_TARGET} benchmark cpu_sequential)
+    target_link_libraries(${BENCH_TARGET} benchmark
+                          cpu_sequential cpu_parallel)
 endforeach()
 
