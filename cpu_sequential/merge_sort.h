@@ -2,6 +2,7 @@
 
 #include <vector>
 
+
 namespace {
   template <typename T>
   void merge_impl(std::vector<T>& data, std::vector<T>& buffer,
@@ -11,16 +12,16 @@ namespace {
     size_t out_idx = begin;
     while (left_idx != middle && right_idx != end) {
       if (data[left_idx] < data[right_idx]) {
-        buffer[out_idx] = data[left_idx++];
+        buffer[out_idx++] = data[left_idx++];
       } else {
-        buffer[out_idx] = data[right_idx++];
+        buffer[out_idx++] = data[right_idx++];
       }
     }
     while (left_idx != middle) {
-      buffer[out_idx] = data[left_idx++];
+      buffer[out_idx++] = data[left_idx++];
     }
     while (right_idx != end) {
-      buffer[out_idx] = data[right_idx++];
+      buffer[out_idx++] = data[right_idx++];
     }
 
     // Copy data back
