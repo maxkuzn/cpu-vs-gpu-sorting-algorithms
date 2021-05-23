@@ -13,7 +13,7 @@
 #include <cpu_parallel/merge_sort.h>
 #include <cpu_parallel/quick_sort.h>
 
-#include <gpu/merge_sort.cuh>
+#include <gpu/merge_sort.h>
 
 static void BM_Sort(benchmark::State& state,
             const std::function<void(std::vector<double>&)>& sort_func) {

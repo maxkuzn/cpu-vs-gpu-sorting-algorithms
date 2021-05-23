@@ -7,7 +7,7 @@
 #include <cpu_parallel/merge_sort.h>
 #include <cpu_parallel/quick_sort.h>
 
-#include <gpu/merge_sort.cuh>
+#include <gpu/merge_sort.h>
 
 
 #include <algorithm>
