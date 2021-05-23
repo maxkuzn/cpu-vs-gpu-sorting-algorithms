@@ -2,6 +2,7 @@
 #include <random>
 #include <vector>
 #include <chrono>
+#include <functional>
 
 #include "utils.h"
 
