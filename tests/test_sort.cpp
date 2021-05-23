@@ -7,6 +7,9 @@
 #include <cpu_parallel/merge_sort.h>
 #include <cpu_parallel/quick_sort.h>
 
+#include <gpu/merge_sort.cuh>
+
+
 #include <algorithm>
 #include <gtest/gtest-typed-test.h>
 #include <limits>
@@ -150,6 +153,8 @@ std::vector<
 
   {cpu_parallel::merge_sort<T>, "parallel merge sort"},
   {cpu_parallel::quick_sort<T>, "parallel merge sort"},
+
+  {gpu::merge_sort<T>, "GPU merge sort"},
 };
 
 template<typename T>
@@ -165,5 +170,7 @@ std::vector<
 
   {cpu_parallel::merge_sort<T>, "parallel merge sort"},
   {cpu_parallel::quick_sort<T>, "parallel merge sort"},
+ 
+  {gpu::merge_sort<T>, "GPU merge sort"},
 };
 

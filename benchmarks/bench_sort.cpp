@@ -13,6 +13,8 @@
 #include <cpu_parallel/merge_sort.h>
 #include <cpu_parallel/quick_sort.h>
 
+#include <gpu/merge_sort.cuh>
+
 static void BM_Sort(benchmark::State& state,
             const std::function<void(std::vector<double>&)>& sort_func) {
   std::vector<double> data = get_random_vector(state.range(0));
@@ -29,6 +31,7 @@ static void BM_Sort(benchmark::State& state,
 
 
 // Register the function as a benchmark
+// ============= Sequential algorithms ===============
 BENCHMARK_CAPTURE(BM_Sort, MergeSort, cpu_sequential::merge_sort<double>)
   ->DenseRange(0, max_number_of_bench_case(), 1)
   ->Unit(benchmark::kSecond);
@@ -43,12 +46,19 @@ BENCHMARK_CAPTURE(BM_Sort, StdSort, cpu_sequential::std_sort_wrapper<double>)
   ->Unit(benchmark::kSecond);
 
 
-
+// OpenMP
+// =============== OpenMP algorithms =================
 BENCHMARK_CAPTURE(BM_Sort, ParallelMergeSort, cpu_parallel::merge_sort<double>)
   ->DenseRange(0, max_number_of_bench_case(), 1)
   ->Unit(benchmark::kSecond);
 
 BENCHMARK_CAPTURE(BM_Sort, ParallelQuickSort, cpu_parallel::quick_sort<double>)
+  ->DenseRange(0, max_number_of_bench_case(), 1)
+  ->Unit(benchmark::kSecond);
+
+
+// ================ CUDA algorithms ==================
+BENCHMARK_CAPTURE(BM_Sort, CUDAMergeSort, gpu::merge_sort<double>)
   ->DenseRange(0, max_number_of_bench_case(), 1)
   ->Unit(benchmark::kSecond);
 

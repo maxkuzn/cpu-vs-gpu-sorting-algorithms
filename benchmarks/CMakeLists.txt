@@ -18,6 +18,6 @@ foreach(BENCH_SOURCE ${BENCH_SOURCES})
 
     add_executable(${BENCH_TARGET} ${BENCH_SOURCE})
     target_link_libraries(${BENCH_TARGET} benchmark
-                          cpu_sequential cpu_parallel)
+                          cpu_sequential cpu_parallel gpu)
 endforeach()
 
