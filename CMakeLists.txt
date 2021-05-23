@@ -3,6 +3,15 @@ cmake_minimum_required(VERSION 3.12)
 # set the project name
 project(cpu_vs_gpu_sorting_algorithms)
 
+OPTION (USE_CUDA "Use OpenMP to enamble <omp.h>" ON)
+if (USE_CUDA)
+    enable_language(CUDA)
+    include(CheckLanguage)
+    check_language(CUDA)
+    include_directories("${CUDA_INCLUDE_DIRS}")
+endif()
+
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -12,7 +21,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # SET(CMAKE_C_ARCHIVE_FINISH   "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
 # SET(CMAKE_CXX_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
 
-add_compile_options(-Wall -Wextra -Werror)
+# add_compile_options(-Wall -Wextra -Werror)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
 
@@ -58,6 +68,7 @@ endif()
 
 add_subdirectory(cpu_sequential)
 add_subdirectory(cpu_parallel)
+add_subdirectory(gpu)
 
 add_subdirectory(tests)
 add_subdirectory(benchmarks)

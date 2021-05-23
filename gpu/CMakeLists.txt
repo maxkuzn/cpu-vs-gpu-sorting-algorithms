@@ -1,0 +1,30 @@
+get_filename_component(LIB_INCLUDE_PATH ".." ABSOLUTE)
+get_filename_component(LIB_PATH "." ABSOLUTE)
+
+if(NOT DEFINED CMAKE_CUDA_STANDARD)
+    set(CMAKE_CUDA_STANDARD 14)
+    set(CMAKE_CUDA_STANDARD_REQUIRED ON)
+endif()
+
+file(GLOB_RECURSE LIB_CUDA_SOURCES ${LIB_PATH}/*.cu)
+file(GLOB_RECURSE LIB_CUDA_HEADERS ${LIB_PATH}/*.cuh)
+add_library(gpu STATIC ${LIB_CUDA_SOURCES} ${LIB_CUDA_HEADERS})
+target_include_directories(gpu PUBLIC ${LIB_INCLUDE_PATH})
+set_target_properties(gpu PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+
+find_package(CUDA REQUIRED)
+# set(CUDA_SEPARABLE_COMPILATION ON)
+# set(CUDA_PROPAGATE_HOST_FLAGS OFF)
+# set(CUDA_HOST_COMPILER clang++)
+
+# COMPILE CU FILES
+# list( APPEND CUDA_NVCC_FLAGS "-gencode arch=compute_30,code=sm_30; -std=c++11")
+# CUDA_COMPILE(CU_O ${LIB_CUDA_HEADERS} ${LIB_CUDA_SOURCES})
+
+# SETUP FOR CPP FILES
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+# include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# COMPILE AND LINK
+# cuda_add_executable(main ${CMAKE_CURRENT_SOURCE_DIR}/main.cc ${CU_O})
+
