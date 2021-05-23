@@ -1,8 +1,11 @@
-include(FetchContent)
-FetchContent_Declare(googlebenchmark
-                     GIT_REPOSITORY https://github.com/google/benchmark
-        )
-FetchContent_MakeAvailable(googlebenchmark)
+# include(FetchContent)
+# FetchContent_Declare(googlebenchmark
+#                      GIT_REPOSITORY https://github.com/google/benchmark
+#         )
+# FetchContent_MakeAvailable(googlebenchmark)
+
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/gbenchmark" "libs/banchmark")
+
 
 
 # Find benchmark sources

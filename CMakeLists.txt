@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.12)
 
 # set the project name
 project(cpu_vs_gpu_sorting_algorithms)
